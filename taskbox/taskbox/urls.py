@@ -9,12 +9,12 @@ urlpatterns = [
     url(
         regex=r'tasks/new$',
         view=views.TaskCreateView.as_view(),
-        name='task_create'
+        name='create_task'
     ),
     url(
         regex=r'^tasks/(?P<pk>\d+)/edit$',
         view=views.TaskUpdateView.as_view(),
-        name='task_update'
+        name='update_task'
     ),
     url(
         regex=r'^tasks/(?P<pk>\d+)/delete$',
@@ -29,6 +29,6 @@ urlpatterns = [
     url(
         regex=r'^tasks$',
         view=views.TaskListView.as_view(),
-        name='index_task'
+        name='show_tasks'
     )
 ]

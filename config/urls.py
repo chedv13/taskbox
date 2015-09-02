@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name="home"),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include("taskbox.taskbox.urls", namespace="taskbox")),
-    url(r'users/^', include("taskbox.users.urls", namespace="users")),
+    url(r'^users/', include("taskbox.users.urls", namespace="users")),
     url(r'^accounts/', include('allauth.urls')),
 ]
 

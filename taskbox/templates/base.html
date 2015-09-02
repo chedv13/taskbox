@@ -33,14 +33,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">taskist</a>
+            <a class="navbar-brand" href="/">TaskBox</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="javascript:void(0)">Создать пост</a>
+                    <a href="{% url 'taskbox:show_tasks' %}">My Tasks</a>
+                </li>
+                <li>
+                    <a href="{% url 'taskbox:create_task' %}">Create Task</a>
                 </li>
             </ul>
 
