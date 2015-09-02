@@ -10,6 +10,7 @@ class CreateTaskView(edit.CreateView):
 
 class UpdateTaskView(edit.UpdateView):
     model = Task
+    template_name = 'tasks/edit.html'
 
 
 class DeleteTaskView(edit.DeleteView):
