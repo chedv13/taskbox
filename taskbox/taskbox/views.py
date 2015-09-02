@@ -1,18 +1,30 @@
-from django.views.generic import edit
+from django.views.generic import edit, DetailView, ListView
 from .models import Task
 from .forms import TaskForm
 
 
-class CreateTaskView(edit.CreateView):
+class TaskCreateView(edit.CreateView):
     form_class = TaskForm
     template_name = 'tasks/new.html'
+    success_url = '/tasks'
 
 
-class UpdateTaskView(edit.UpdateView):
+class TaskUpdateView(edit.UpdateView):
     model = Task
     template_name = 'tasks/edit.html'
+    success_url = '/tasks'
 
 
-class DeleteTaskView(edit.DeleteView):
+class TaskDeleteView(edit.DeleteView):
     model = Task
     success_url = '/tasks'
+
+
+class TaskListView(ListView):
+    model = Task
+    template_name = 'tasks/index.html'
+
+
+class TaskDetailView(DetailView):
+    model = Task
+    template_name = 'tasks/show.html'
