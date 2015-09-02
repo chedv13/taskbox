@@ -11,6 +11,7 @@ class TaskCreateView(edit.CreateView):
 
 class TaskUpdateView(edit.UpdateView):
     model = Task
+    form_class = TaskForm
     template_name = 'tasks/edit.html'
     success_url = '/tasks'
 

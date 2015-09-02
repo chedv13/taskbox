@@ -22,7 +22,7 @@ urlpatterns = [
         name='delete_task'
     ),
     url(
-        regex=r'^tasks/(?P<pk>\d+)/delete$',
+        regex=r'^tasks/(?P<pk>\d+)$',
         view=views.TaskDetailView.as_view(),
         name='show_task'
     ),
