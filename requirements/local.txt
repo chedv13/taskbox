@@ -1,0 +1,4 @@
+-r base.txt
+
+# Custom extensions for django
+django-extensions==1.5.6

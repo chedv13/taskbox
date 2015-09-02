@@ -1,0 +1,12 @@
+# For configuration
+django-environ==0.3.0
+
+# For database connection
+psycopg2==2.6.1
+
+# For forms mixins
+django-braces==1.8.1
+
+# For user registration, either via email or social
+django-allauth==0.23.0
+
