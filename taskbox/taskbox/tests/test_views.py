@@ -1,19 +1,19 @@
-from django.test import RequestFactory
-
-from test_plus.test import TestCase
-from ..models import Task
-from ..views import (
-    TaskCreateView,
-    TaskUpdateView,
-    TaskDeleteView
-)
-
-
-class BaseTaskTestCase(TestCase):
-    def setUp(self):
-        self.user = self.make_user()
-        self.task = Task.objects.create(user=self.user, text='test text')
-        self.factory = RequestFactory()
+# from django.test import RequestFactory
+#
+# from test_plus.test import TestCase
+# from ..models import Task
+# from ..views import (
+#     TaskCreateView,
+#     TaskUpdateView,
+#     TaskDeleteView
+# )
+#
+#
+# class BaseTaskTestCase(TestCase):
+#     def setUp(self):
+#         self.user = self.make_user()
+#         self.task = Task.objects.create(user=self.user, text='test text')
+#         self.factory = RequestFactory()
 
 # class TestUserRedirectView(BaseUserTestCase):
 #     def test_get_redirect_url(self):

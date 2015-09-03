@@ -1,3 +1,6 @@
+# Django version
+django==1.8.4
+
 # For configuration
 django-environ==0.3.0
 

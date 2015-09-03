@@ -1,8 +1,18 @@
-from django import forms
+# -*- coding:utf-8 -*-
+
+from django.forms import ModelForm, Textarea
 from .models import Task
 
 
-class TaskForm(forms.ModelForm):
+class TaskForm(ModelForm):
     class Meta:
         model = Task
         fields = ('text', 'done', 'user')
+        widgets = {
+            'text': Textarea(attrs={'cols': 80, 'rows': 10})
+        }
+        error_messages = {
+            'text': {
+                'required': 'Пожалуйста, укажите текст задачи'
+            }
+        }

@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    User: {{ object.text }}
+    <div class="well">
+        <p>Text: {{ object.text }}</p>
+
+        <p>Done: {{ object.done }}</p>
+    </div>
 {% endblock %}

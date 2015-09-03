@@ -38,14 +38,16 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="{% url 'taskbox:show_tasks' %}">My Tasks</a>
-                </li>
-                <li>
-                    <a href="{% url 'taskbox:create_task' %}">Create Task</a>
-                </li>
-            </ul>
+            {% if request.user.is_authenticated %}
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="{% url 'taskbox:show_tasks' %}">My Tasks</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'taskbox:create_task' %}">Create Task</a>
+                    </li>
+                </ul>
+            {% endif %}
 
             <ul class="nav navbar-nav navbar-right">
                 {% if request.user.is_authenticated %}

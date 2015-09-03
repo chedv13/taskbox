@@ -1,11 +1,19 @@
-from test_plus.test import TestCase
-from ..models import Task
+from django.test import TestCase
+from taskbox.taskbox.tests.factories import *
 
 
 class TestTask(TestCase):
     def setUp(self):
-        self.user = self.make_user()
-        self.task = Task.objects.create(user=self.user, text='test text')
+        self.task = TaskFactory()
 
-    def test_default_done(self):
-        self.assertEqual(self.task.done, False)
+    def test_done_default(self):
+        self.assertEqual(
+            self.task.done,
+            False
+        )
+
+    def test_text_default(self):
+        self.assertEqual(
+            self.task.text,
+            ''
+        )
