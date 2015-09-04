@@ -22,3 +22,6 @@ nosetests.xml
 
 # vagrant
 .vagrant
+
+# coverage
+htmlcov
