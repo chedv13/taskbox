@@ -1,62 +1,46 @@
-# from django.test import RequestFactory
-#
-# from test_plus.test import TestCase
-# from ..models import Task
-# from ..views import (
-#     TaskCreateView,
-#     TaskUpdateView,
-#     TaskDeleteView
-# )
-#
-#
-# class BaseTaskTestCase(TestCase):
-#     def setUp(self):
-#         self.user = self.make_user()
-#         self.task = Task.objects.create(user=self.user, text='test text')
-#         self.factory = RequestFactory()
+from django.test import TestCase, RequestFactory
+from taskbox.taskbox.views import *
+from taskbox.taskbox.tests.factories import *
+from django.test import Client
+from django.core.urlresolvers import reverse
 
-# class TestUserRedirectView(BaseUserTestCase):
-#     def test_get_redirect_url(self):
-#         # Instantiate the view directly. Never do this outside a test!
-#         view = UserRedirectView()
-#         # Generate a fake request
-#         request = self.factory.get('/fake-url')
-#         # Attach the user to the request
-#         request.user = self.user
-#         # Attach the request to the view
-#         view.request = request
-#         # Expect: '/users/testuser/', as that is the default username for
-#         #   self.make_user()
-#         self.assertEqual(
-#             view.get_redirect_url(),
-#             '/users/testuser/'
-#         )
+import django
+
+django.setup()
+
+
+class BaseUserTestCase(TestCase):
+    def setUp(self):
+        self.user = UserFactory()
+        self.factory = RequestFactory()
+
+
+class TestTaskDetailView(BaseUserTestCase):
+    def test_detail_view(self):
+        task = TaskFactory(user=self.user)
+        self.client.login(username=task.user.username, password='adm1n')
+
+        response = self.client.get('/tasks/%d' % (task.id))
+        self.assertEqual(response.status_code, 200)
+
+
+class TestTaskListView(BaseUserTestCase):
+    def test_index_view_without_tasks(self):
+        self.client.login(username=self.user.username, password='adm1n')
+
+        response = self.client.get('/tasks')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Tasks not found")
+        self.assertQuerysetEqual(response.context['task_list'], [])
+
+    def test_index_view_wth_tasks(self):
+        TaskFactory(user=self.user)
+        self.client.login(username=self.user.username, password='adm1n')
+
+        response = self.client.get('/tasks')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['task_list'].count(), 1)
+
 #
-#
-# class TestUserUpdateView(BaseUserTestCase):
-#     def setUp(self):
-#         # call BaseUserTestCase.setUp()
-#         super(TestUserUpdateView, self).setUp()
-#         # Instantiate the view directly. Never do this outside a test!
-#         self.view = UserUpdateView()
-#         # Generate a fake request
-#         request = self.factory.get('/fake-url')
-#         # Attach the user to the request
-#         request.user = self.user
-#         # Attach the request to the view
-#         self.view.request = request
-#
-#     def test_get_success_url(self):
-#         # Expect: '/users/testuser/', as that is the default username for
-#         #   self.make_user()
-#         self.assertEqual(
-#             self.view.get_success_url(),
-#             '/users/testuser/'
-#         )
-#
-#     def test_get_object(self):
-#         # Expect: self.user, as that is the request's user object
-#         self.assertEqual(
-#             self.view.get_object(),
-#             self.user
-#         )
+# class TestTaskCreateView():
+#     def test_create_task_with_text(self):

@@ -16,8 +16,6 @@ class UserFactory(factory.DjangoModelFactory):
         return 'user%d' % n
 
 
-class TaskFactory(factory.Factory):
+class TaskFactory(factory.DjangoModelFactory):
     class Meta:
         model = Task
-
-    user = factory.RelatedFactory(UserFactory)

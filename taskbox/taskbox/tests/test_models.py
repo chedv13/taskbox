@@ -4,7 +4,8 @@ from taskbox.taskbox.tests.factories import *
 
 class TestTask(TestCase):
     def setUp(self):
-        self.task = TaskFactory()
+        self.user = UserFactory()
+        self.task = TaskFactory(user=self.user)
 
     def test_done_default(self):
         self.assertEqual(
