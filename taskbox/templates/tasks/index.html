@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if task_list|length > 0 %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Text</th>
+                <th>Done</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for task in task_list %}
+                <tr>
+                    <th scope="row">{{ task.id }}</th>
+                    <td>{{ task.text }}</td>
+                    <td>{{ task.done }}</td>
+                    <td>
+                        <a href="{% url "taskbox:show_task" task.id %}" class="btn btn-info">Show</a>
+                        <a href="{% url "taskbox:update_task" task.id %}" class="btn btn-primary">Update</a>
+                        <a href="{% url "taskbox:delete_task" task.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="well">Tasks not found</div>
+    {% endif %}
+{% endblock %}

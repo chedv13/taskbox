@@ -15,11 +15,23 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-# from taskbox.taskbox import views as taskbox_views
-# from taskbox.users import views as users_views
+from django.conf import settings
+from django.views.generic import TemplateView
 
 urlpatterns = [
+    url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name="home"),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include("taskbox.taskbox.urls", namespace="taskbox")),
-    url(r'users/^', include("taskbox.users.urls", namespace="users"))
+    url(r'^users/', include("taskbox.users.urls", namespace="users")),
+    url(r'^accounts/', include('allauth.urls')),
 ]
+
+if settings.DEBUG:
+    # This allows the error pages to be debugged during development, just visit
+    # these url in browser to see how these error pages look like.
+    urlpatterns += [
+        url(r'^400/$', 'django.views.defaults.bad_request'),
+        url(r'^403/$', 'django.views.defaults.permission_denied'),
+        url(r'^404/$', 'django.views.defaults.page_not_found'),
+        url(r'^500/$', 'django.views.defaults.server_error')
+    ]

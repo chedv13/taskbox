@@ -16,4 +16,17 @@ DEBUG_TOOLBAR_CONFIG = {
 
 # django-extensions
 # ------------------------------------------------------------------------------
-INSTALLED_APPS += ('django_extensions',)
+INSTALLED_APPS += ('django_extensions', 'django_nose',)
+
+# # TESTING
+# # ------------------------------------------------------------------------------
+# TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# CACHING
+# ------------------------------------------------------------------------------
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': ''
+    }
+}
