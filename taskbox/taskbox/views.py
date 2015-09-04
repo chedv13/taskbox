@@ -9,6 +9,11 @@ class TaskCreateView(LoginRequiredMixin, edit.CreateView):
     template_name = 'tasks/new.html'
     success_url = '/tasks'
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+
+        return super(TaskCreateView, self).form_valid(form)
+
 
 class TaskUpdateView(LoginRequiredMixin, edit.UpdateView):
     model = Task
