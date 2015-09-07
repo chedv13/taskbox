@@ -25,3 +25,7 @@ nosetests.xml
 
 # coverage
 htmlcov
+
+# dist
+dist
+taskbox.egg-info
