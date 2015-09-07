@@ -3,9 +3,15 @@ __author__ = 'chedv13'
 
 from distutils.core import setup
 from setuptools import find_packages
+from pip.req import parse_requirements
 
-with open('requirements/local.txt') as f:
-    required = f.read().splitlines()
+# parse_requirements() returns generator of pip.req.InstallRequirement objects
+install_reqs = parse_requirements('requirements/base.txt', session=False)
+
+#
+# with open('requirements/local.txt') as f:
+#     required = f.read().splitlines()
+reqs = [str(ir.req) for ir in install_reqs]
 
 setup(name="taskbox",
       author="Dmitr Chekurov",
@@ -15,5 +21,5 @@ setup(name="taskbox",
       packages=find_packages(),
       include_package_data=True,
       zip_safe=True,
-      install_requires=required,
+      install_requires=reqs,
       )
