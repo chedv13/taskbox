@@ -16,6 +16,13 @@ class TaskCreateView(LoginRequiredMixin, edit.CreateView):
 
         return super(TaskCreateView, self).form_valid(form)
 
+    def get_form_kwargs(self):
+        kwargs = super(TaskCreateView, self).get_form_kwargs()
+
+        kwargs.update({"fields": ["text"]})
+
+        return kwargs
+
 
 class TaskUpdateView(LoginRequiredMixin, edit.UpdateView):
     model = Task
@@ -26,7 +33,7 @@ class TaskUpdateView(LoginRequiredMixin, edit.UpdateView):
     def get_form_kwargs(self):
         kwargs = super(TaskUpdateView, self).get_form_kwargs()
 
-        kwargs.update({'additional_fields': ['status']})
+        kwargs.update({"fields": ["text", "status"]})
 
         return kwargs
 

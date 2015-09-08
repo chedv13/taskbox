@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 from django.test import TestCase, RequestFactory
 from taskbox.taskbox.tests.factories import *
 from django.core.urlresolvers import reverse
@@ -33,8 +35,19 @@ class TestTaskUpdateView(BaseUserTestCase):
         task = TaskFactory(user=self.user)
 
         self.assertEqual(Task.objects.count(), 1)
+
+        print reverse('taskbox:update_task', args=(task.id,))
+
         self.client.post(reverse('taskbox:update_task', args=(task.id,)), {'text': 'test'})
         self.assertEqual(Task.objects.first().text, 'test')
+
+    def tes_update_task_status_from_in_progress_to_open(self):
+        task = TaskFactory(status=TaskStatus.IN_PROGRESS, user=self.user)
+
+        self.assertEqual(TaskStatus.objects.count(), 1)
+        response = self.client.post(reverse('taskbox:update_task', args=(task.id,)), {'status': TaskStatus.OPEN})
+        self.assertEqual(Task.objects.first().status, TaskStatus.IN_PROGRESS)
+        self.assertContains(response, "Статус In Progress не может перейти в Open")
 
 
 class TestTaskDeleteView(BaseUserTestCase):
