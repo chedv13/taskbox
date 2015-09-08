@@ -1,3 +1,4 @@
+import os
 from .common import *
 
 # django-debug-toolbar
@@ -36,11 +37,7 @@ CACHES = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'taskbox',
-        'USER': 'taskbox',
-        'PASSWORD': 'e4249G20WW4V2de',
-        'HOST': '',
-        'PORT': ''
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join('taskbox', 'db.sqlite3'),
     }
 }
