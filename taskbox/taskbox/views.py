@@ -1,7 +1,9 @@
 from django.views.generic import edit, DetailView, ListView
-from braces.views import LoginRequiredMixin
-from .models import Task
+from braces.views import LoginRequiredMixin, UserFormKwargsMixin
+from .models import Task, TaskStatus
 from .forms import TaskForm
+from django.forms.models import modelform_factory
+from django.forms import TypedChoiceField
 
 
 class TaskCreateView(LoginRequiredMixin, edit.CreateView):
@@ -20,6 +22,13 @@ class TaskUpdateView(LoginRequiredMixin, edit.UpdateView):
     form_class = TaskForm
     template_name = 'tasks/edit.html'
     success_url = '/tasks'
+
+    def get_form_kwargs(self):
+        kwargs = super(TaskUpdateView, self).get_form_kwargs()
+
+        kwargs.update({'additional_fields': ['status']})
+
+        return kwargs
 
 
 class TaskDeleteView(LoginRequiredMixin, edit.DeleteView):

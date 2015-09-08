@@ -2,9 +2,10 @@ from django.test import TestCase, RequestFactory
 from taskbox.taskbox.tests.factories import *
 from django.core.urlresolvers import reverse
 
-import django
+from taskbox.taskbox.models import TaskStatus
+from taskbox.taskbox.forms import TaskForm
 
-django.setup()
+import django
 
 
 class BaseUserTestCase(TestCase):
@@ -15,15 +16,16 @@ class BaseUserTestCase(TestCase):
 
 
 class TestTaskCreateView(BaseUserTestCase):
-    def test_create_task_with_text(self):
-        self.assertEqual(Task.objects.count(), 0)
-        self.client.post(reverse('taskbox:create_task'), {'text': 'test text'})
-        self.assertEqual(Task.objects.count(), 1)
-
     def test_create_task_without_text(self):
         self.assertEqual(Task.objects.count(), 0)
         self.client.post(reverse('taskbox:create_task'), {'text': ''})
         self.assertEqual(Task.objects.count(), 0)
+
+    def test_create_task_and_check_status_is_valid(self):
+        self.assertEqual(Task.objects.count(), 0)
+        response = self.client.post(reverse('taskbox:create_task'), {'text': 'test text'})
+        self.assertEqual(Task.objects.count(), 1)
+        self.assertEqual(Task.objects.first().status, TaskStatus.OPEN)
 
 
 class TestTaskUpdateView(BaseUserTestCase):

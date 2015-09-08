@@ -7,12 +7,6 @@ class TestTask(TestCase):
         self.user = UserFactory()
         self.task = TaskFactory(user=self.user)
 
-    def test_done_default(self):
-        self.assertEqual(
-            self.task.done,
-            False
-        )
-
     def test_text_default(self):
         self.assertEqual(
             self.task.text,
