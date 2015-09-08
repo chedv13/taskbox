@@ -35,9 +35,6 @@ class TestTaskUpdateView(BaseUserTestCase):
         task = TaskFactory(user=self.user)
 
         self.assertEqual(Task.objects.count(), 1)
-
-        print reverse('taskbox:update_task', args=(task.id,))
-
         self.client.post(reverse('taskbox:update_task', args=(task.id,)), {'text': 'test'})
         self.assertEqual(Task.objects.first().text, 'test')
 
