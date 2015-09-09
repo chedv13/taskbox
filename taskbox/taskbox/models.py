@@ -37,12 +37,13 @@ class Task(models.Model):
         self.prev_status = self.status
 
     def clean(self):
-        if self.status == 0 and self.prev_status == 1:
+        if self.status == TaskStatus.OPEN and self.prev_status == TaskStatus.IN_PROGRESS:
             raise ValidationError('Статус In Progress не может перейти в Open')
 
 
-@receiver(post_save, sender=Task)
+@receiver(post_save, sender=Task, dispatch_uid='models.send_mass_mail_for_done_tasks')
 def send_mass_mail_for_done_tasks(instance, **kwargs):
+    print 'test'
     if instance.status == TaskStatus.DONE:
         user_email = instance.user.email
         emails = map(lambda user: str(user.email), User.objects.exclude(email=user_email))

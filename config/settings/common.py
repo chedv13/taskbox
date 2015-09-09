@@ -172,7 +172,6 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
 # EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_HOST_USER = 'taskboxdev@yandex.ru'
 EMAIL_HOST_PASSWORD = '93MPfodeL2796kl'

@@ -41,3 +41,6 @@ DATABASES = {
         'NAME': os.path.join('taskbox', 'db.sqlite3'),
     }
 }
+
+# Email backend
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

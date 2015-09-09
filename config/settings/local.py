@@ -44,3 +44,6 @@ DATABASES = {
         'PORT': ''
     }
 }
+
+# Email backend
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
