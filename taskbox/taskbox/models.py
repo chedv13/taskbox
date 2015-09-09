@@ -43,7 +43,6 @@ class Task(models.Model):
 
 @receiver(post_save, sender=Task, dispatch_uid='models.send_mass_mail_for_done_tasks')
 def send_mass_mail_for_done_tasks(instance, **kwargs):
-    print 'test'
     if instance.status == TaskStatus.DONE:
         user_email = instance.user.email
         emails = map(lambda user: str(user.email), User.objects.exclude(email=user_email))
