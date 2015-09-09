@@ -3,9 +3,7 @@ branch = True
 omit =
     taskbox/contrib/sites/migrations/*
     taskbox/taskbox/migrations/*
-    taskbox/taskbox/tests/*
     taskbox/users/migrations/*
-    taskbox/users/tests/*
 source = taskbox
 
 [report]
