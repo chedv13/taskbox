@@ -4,6 +4,9 @@ from django.db import models
 from taskbox.users.models import User
 from django_enumfield import enum
 from django.core.exceptions import ValidationError
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.mail import send_mail
 
 
 class TaskStatus(enum.Enum):
@@ -36,3 +39,13 @@ class Task(models.Model):
     def clean(self):
         if self.status == 0 and self.prev_status == 1:
             raise ValidationError('Статус In Progress не может перейти в Open')
+
+
+@receiver(post_save, sender=Task)
+def send_mass_mail_for_done_tasks(instance, **kwargs):
+    if instance.status == TaskStatus.DONE:
+        user_email = instance.user.email
+        emails = map(lambda user: str(user.email), User.objects.exclude(email=user_email))
+
+        send_mail('Closing tasks', '%s closed task #%d.' % (user_email, instance.id), 'taskboxdev@yandex.ru',
+                  emails)
