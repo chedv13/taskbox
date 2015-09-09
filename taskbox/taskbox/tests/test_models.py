@@ -24,7 +24,10 @@ class TestTask(TestCase):
             TaskStatus.OPEN
         )
 
-        # def test_mass_mail_sending_for_done_tasks(self):
-        #     with mock.patch('taskbox.taskbox.models.send_mass_mail_for_done_tasks') as mocked_handler:
-        #         signals.post_save.connect(mocked_handler, sender=Task, dispatch_uid='test_cache_mocked_handler')
-        #     self.assertEqual(mocked_handler.call_count, 1)
+    def test_mass_mail_sending_for_done_tasks(self):
+        with mock.patch('taskbox.taskbox.models.send_mass_mail_for_done_tasks') as mocked_handler:
+            signals.post_save.connect(mocked_handler, sender=Task, dispatch_uid='test_cache_mocked_handler')
+        self.task.status = TaskStatus.DONE
+        self.task.save()
+        self.assertTrue(mocked_handler.called)
+        self.assertEqual(mocked_handler.call_count, 1)
