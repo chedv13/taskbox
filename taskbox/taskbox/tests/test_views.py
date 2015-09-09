@@ -35,7 +35,7 @@ class TestTaskUpdateView(BaseUserTestCase):
         task = TaskFactory(user=self.user)
 
         self.assertEqual(Task.objects.count(), 1)
-        self.client.post(reverse('taskbox:update_task', args=(task.id,)), {'text': 'test'})
+        self.client.post(reverse('taskbox:update_task', args=(task.id,)), {'text': 'test', 'status': TaskStatus.OPEN})
         self.assertEqual(Task.objects.first().text, 'test')
 
     def tes_update_task_status_from_in_progress_to_open(self):
