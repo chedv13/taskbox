@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
-from django.forms import ModelForm, TypedChoiceField, CharField
-from .models import Task, TaskStatus
+from django.forms import ModelForm, ChoiceField, CharField, Select
+from .models import Task
 
 
 class TaskForm(ModelForm):
@@ -26,7 +26,6 @@ class TaskForm(ModelForm):
                 if field == "text":
                     self.base_fields[field] = CharField(label='Text')
                 elif field == "status":
-                    self.base_fields[field] = TypedChoiceField(choices=TaskStatus.choices(),
-                                                               coerce=int)
+                    self.base_fields[field] = ChoiceField(widget=Select, choices=Task.STATUS_CHOICES)
 
         super(TaskForm, self).__init__(*args, **kwargs)

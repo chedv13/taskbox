@@ -4,11 +4,6 @@ from django.test import TestCase, RequestFactory
 from taskbox.taskbox.tests.factories import *
 from django.core.urlresolvers import reverse
 
-from taskbox.taskbox.models import TaskStatus
-from taskbox.taskbox.forms import TaskForm
-
-import django
-
 
 class BaseUserTestCase(TestCase):
     def setUp(self):
@@ -27,7 +22,7 @@ class TestTaskCreateView(BaseUserTestCase):
         self.assertEqual(Task.objects.count(), 0)
         response = self.client.post(reverse('taskbox:create_task'), {'text': 'test text'})
         self.assertEqual(Task.objects.count(), 1)
-        self.assertEqual(Task.objects.first().status, TaskStatus.OPEN)
+        self.assertEqual(Task.objects.first().status, 'open')
 
 
 class TestTaskUpdateView(BaseUserTestCase):
@@ -35,15 +30,15 @@ class TestTaskUpdateView(BaseUserTestCase):
         task = TaskFactory(user=self.user)
 
         self.assertEqual(Task.objects.count(), 1)
-        self.client.post(reverse('taskbox:update_task', args=(task.id,)), {'text': 'test', 'status': TaskStatus.OPEN})
+        self.client.post(reverse('taskbox:update_task', args=(task.id,)), {'text': 'test', 'status': 'open'})
         self.assertEqual(Task.objects.first().text, 'test')
 
     def tes_update_task_status_from_in_progress_to_open(self):
-        task = TaskFactory(status=TaskStatus.IN_PROGRESS, user=self.user)
+        task = TaskFactory(status='in_progress', user=self.user)
 
-        self.assertEqual(TaskStatus.objects.count(), 1)
-        response = self.client.post(reverse('taskbox:update_task', args=(task.id,)), {'status': TaskStatus.OPEN})
-        self.assertEqual(Task.objects.first().status, TaskStatus.IN_PROGRESS)
+        self.assertEqual(Task.objects.count(), 1)
+        response = self.client.post(reverse('taskbox:update_task', args=(task.id,)), {'status': 'open'})
+        self.assertEqual(Task.objects.first().status, 'in_progress')
         self.assertContains(response, "Статус In Progress не может перейти в Open")
 
 
